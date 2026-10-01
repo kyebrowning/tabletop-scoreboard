@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Marvel Crisis Protocol Overlay</title>
+        <link rel="stylesheet" href="overlay.css" />
+    </head>
+    <body>
+        <div id="scoreContainer">
+            <!-- Event branding: drop a logo at games/marvel-crisis-protocol/assets/event_logo.png -->
+            <header id="eventHeader" class="brandStrip">
+                <img id="eventLogo" src="../assets/event_logo.png" alt="" onerror="this.remove()" />
+                <div id="eventInfo">
+                    <div id="eventName">Event Name</div>
+                    <div id="eventDetails">Event details</div>
+                </div>
+            </header>
+
+            <!-- Player 1: identity, team tactics, objective -->
+            <section id="p1Panel" class="playerPanel">
+                <div class="playerHeader">
+                    <div class="affiliationBadge">
+                        <div id="p1Icon" class="affiliationIcon"></div>
+                        <div id="p1VP" class="playerVP"></div>
+                    </div>
+                    <div class="playerText">
+                        <div id="p1Name" class="playerName"></div>
+                        <div id="p1Affiliation" class="playerAffiliation"></div>
+                    </div>
+                </div>
+                <ul id="p1Tactics" class="tacticsList"></ul>
+                <div id="p1Objective" class="objective"></div>
+            </section>
+
+            <!-- Player 2: mirrored order — objective, identity, team tactics -->
+            <section id="p2Panel" class="playerPanel">
+                <div id="p2Objective" class="objective"></div>
+                <div class="playerHeader">
+                    <div class="affiliationBadge">
+                        <div id="p2Icon" class="affiliationIcon"></div>
+                        <div id="p2VP" class="playerVP"></div>
+                    </div>
+                    <div class="playerText">
+                        <div id="p2Name" class="playerName"></div>
+                        <div id="p2Affiliation" class="playerAffiliation"></div>
+                    </div>
+                </div>
+                <ul id="p2Tactics" class="tacticsList"></ul>
+            </section>
+
+            <!-- Sponsors: drop logos in games/marvel-crisis-protocol/assets/sponsors/ and list them here.
+                 Any logo whose file is missing removes itself. -->
+            <footer id="sponsorFooter" class="brandStrip">
+                <div id="sponsorLabel">Sponsored by</div>
+                <div id="sponsorLogos">
+                    <img src="../assets/sponsors/sponsor1.png" alt="" onerror="this.remove()" />
+                    <img src="../assets/sponsors/sponsor2.png" alt="" onerror="this.remove()" />
+                    <img src="../assets/sponsors/sponsor3.png" alt="" onerror="this.remove()" />
+                </div>
+            </footer>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="../affiliations.js"></script>
+        <script src="../objectives.js"></script>
+        <script src="overlay.js"></script>
+    </body>
+</html>

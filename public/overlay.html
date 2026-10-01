@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Overlay</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 1920px;
+                height: 1080px;
+                background: transparent;
+                overflow: hidden;
+            }
+            #gameFrame {
+                width: 1920px;
+                height: 1080px;
+                border: 0;
+                background: transparent;
+            }
+        </style>
+    </head>
+    <body>
+        <iframe id="gameFrame" title="Live overlay" allowtransparency="true"></iframe>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="overlay.js"></script>
+    </body>
+</html>

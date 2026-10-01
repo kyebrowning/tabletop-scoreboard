@@ -1,0 +1,18 @@
+{
+  "name": "tabletop-scoreboard",
+  "version": "1.0.0",
+  "description": "Local-network live tournament scoreboard/overlay server with a schema-driven admin panel, player self-report pages, and an OBS browser-source overlay. Supports multiple game types.",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

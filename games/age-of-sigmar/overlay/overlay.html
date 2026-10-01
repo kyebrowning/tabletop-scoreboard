@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Age of Sigmar Overlay</title>
+        <link rel="stylesheet" href="overlay.css" />
+    </head>
+    <body>
+        <!-- Left sidebar: event branding, round info, sponsors -->
+        <aside id="sidebar">
+            <header id="eventHeader">
+                <!-- Drop the event logo at games/age-of-sigmar/assets/event_logo.png -->
+                <img id="eventLogo" src="../assets/event_logo.png" alt="" onerror="this.remove()" />
+                <div id="eventDetails">Event Details Here</div>
+            </header>
+
+            <div id="roundInfo">
+                <div id="battlePlanName"></div>
+                <div class="divider"></div>
+                <div id="roundCounterContainer">
+                    <div id="topOrBottom"></div>
+                    <div id="roundCount"></div>
+                </div>
+            </div>
+
+            <div id="sponsorPanel">
+                <div id="sponsorTitle">Thanks to our Sponsors</div>
+                <!-- Drop logos in games/age-of-sigmar/assets/sponsors/ and list them here.
+                     Any logo whose file is missing removes itself. -->
+                <div id="sponsorLogos">
+                    <img src="../assets/sponsors/sponsor1.png" alt="" onerror="this.remove()" />
+                    <img src="../assets/sponsors/sponsor2.png" alt="" onerror="this.remove()" />
+                    <img src="../assets/sponsors/sponsor3.png" alt="" onerror="this.remove()" />
+                </div>
+            </div>
+        </aside>
+
+        <!-- Player 1 bar along the top edge; player 2 mirrors it along the bottom edge -->
+        <div id="p1Bar" class="playerBar top">
+            <div class="cpBlock"><div id="p1CP" class="playerPointsCP"></div></div>
+            <div class="vpBlock"><div id="p1VP" class="playerPointsVP"></div></div>
+            <div class="nameBar">
+                <div id="p1Faction" class="playerFaction"></div>
+                <div id="p1Name" class="playerName"></div>
+            </div>
+            <div id="p1Tactic1" class="tacticTab tacticOne"></div>
+            <div id="p1Tactic2" class="tacticTab tacticTwo"></div>
+        </div>
+
+        <div id="p2Bar" class="playerBar bottom">
+            <div class="cpBlock"><div id="p2CP" class="playerPointsCP"></div></div>
+            <div class="vpBlock"><div id="p2VP" class="playerPointsVP"></div></div>
+            <div class="nameBar">
+                <div id="p2Faction" class="playerFaction"></div>
+                <div id="p2Name" class="playerName"></div>
+            </div>
+            <div id="p2Tactic1" class="tacticTab tacticOne"></div>
+            <div id="p2Tactic2" class="tacticTab tacticTwo"></div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="../factions.js"></script>
+        <script src="overlay.js"></script>
+    </body>
+</html>

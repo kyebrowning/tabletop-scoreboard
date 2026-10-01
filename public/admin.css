@@ -1,0 +1,176 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #14171c;
+    color: #e8eaed;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    background: #1c2028;
+    border-bottom: 1px solid #2c313c;
+}
+
+header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.game-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+select,
+input[type='text'],
+input[type='number'] {
+    background: #0f1216;
+    color: #e8eaed;
+    border: 1px solid #3a4150;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 14px;
+}
+
+.game-label {
+    color: #9aa4b2;
+    font-size: 13px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.update-btn {
+    background: #2f6fed;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.update-btn:disabled {
+    background: #2c313c;
+    color: #6b7280;
+    cursor: default;
+}
+
+.update-status {
+    color: #9aa4b2;
+    font-size: 13px;
+    min-width: 80px;
+}
+
+.form-root {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+fieldset.section {
+    flex: 1;
+    min-width: 280px;
+    border: 1px solid #2c313c;
+    border-radius: 8px;
+    padding: 16px;
+    background: #1c2028;
+}
+
+fieldset.section > legend {
+    font-weight: 600;
+    padding: 0 6px;
+}
+
+fieldset.group {
+    border: 1px solid #2c313c;
+    border-radius: 6px;
+    margin: 12px 0;
+    padding: 10px;
+}
+
+fieldset.group > legend {
+    padding: 0 6px;
+    color: #9aa4b2;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+
+label.field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.field-label {
+    color: #c3c9d3;
+}
+
+label.field input[type='text'],
+label.field input[type='number'],
+label.field select,
+label.field button.bool-toggle {
+    width: 160px;
+}
+
+button.bool-toggle {
+    background: #0f1216;
+    color: #9aa4b2;
+    border: 1px solid #3a4150;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button.bool-toggle.on {
+    background: #1e4d33;
+    color: #4ade80;
+    border-color: #2f9e5e;
+}
+
+label.field.dirty {
+    background: rgba(47, 111, 237, 0.12);
+    border-radius: 6px;
+    margin-left: -8px;
+    margin-right: -8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+label.field.dirty .field-label::after {
+    content: ' •';
+    color: #2f6fed;
+}
+
+input.invalid {
+    border-color: #e5484d;
+}
+
+.bool-array {
+    display: flex;
+    gap: 10px;
+}
+
+label.field .bool-array button.bool-toggle {
+    width: 32px;
+    padding: 6px 0;
+    text-align: center;
+}

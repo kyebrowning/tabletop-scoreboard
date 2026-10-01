@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Admin — Tabletop Scoreboard</title>
+        <link rel="stylesheet" href="admin.css" />
+    </head>
+    <body>
+        <header>
+            <h1>Admin Panel</h1>
+            <label class="game-picker">
+                Game:
+                <select id="gameSelect"></select>
+            </label>
+            <span id="gameLabel" class="game-label"></span>
+            <span class="spacer"></span>
+            <button id="updateBtn" type="button" class="update-btn" disabled>Update</button>
+            <span id="updateStatus" class="update-status"></span>
+        </header>
+        <main id="formRoot" class="form-root"></main>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/lib/schemaUtils.js"></script>
+        <script src="admin.js"></script>
+    </body>
+</html>

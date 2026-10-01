@@ -1,0 +1,345 @@
+@font-face {
+    src: url('/assets/fonts/BebasNeue-Bold.otf');
+    font-family: 'BebasNeue';
+}
+
+@font-face {
+    src: url('/assets/fonts/Montserrat-VariableFont_wght.ttf');
+    font-family: 'Montserrat';
+}
+
+/* ===== Theme: edit these to restyle the overlay. Defaults match SG26_AoS_GameOverlay.png. ===== */
+:root {
+    --accent: #fe4a08;              /* sidebar edge stripe */
+    --sidebar-bg: #1c2238;
+    --sidebar-bg-image: none;       /* e.g. url('../assets/sidebar_bg.jpg') */
+    --event-text: #ffffff;          /* location / date under the logo */
+
+    --round-bg: #fb7645;            /* battleplan / round box */
+    --round-text: #ffffff;
+
+    --sponsor-bg: #e3e4e6;
+    --sponsor-border: #00061f;
+    --sponsor-title: #fc3200;
+
+    --score-bg: #fd3c0e;            /* CP and VP blocks */
+    --score-text: #ffffff;
+    --bar-bg: #080e26;              /* name bar and tactic tabs */
+    --player-name: #cf7438;
+    --tactic-text: #ffffff;
+    --tactic-progress-on: #fd3403;
+    --tactic-progress-off: #ffffff; /* outline of an unfilled progress circle */
+}
+
+body {
+    width: 1920px !important;
+    height: 1080px !important;
+    overflow: hidden;
+    background: transparent;
+    padding: 0px;
+    margin: 0px;
+    text-transform: uppercase;
+    font-family: 'BebasNeue';
+}
+
+/* ===== Sidebar ===== */
+
+#sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 438px;
+    height: 1080px;
+    border-right: 10px solid var(--accent);
+    background-color: var(--sidebar-bg);
+    background-image: var(--sidebar-bg-image);
+    background-size: cover;
+    background-position: center;
+}
+
+#eventHeader {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* Uncomment below if you do not have an event logo/details you want to show */
+    /* display: none; */    
+}
+
+#eventLogo {
+    width: 380px;
+    height: 220px;
+    object-fit: contain;
+}
+
+#eventDetails {
+    position: absolute;
+    top: 228px;
+    width: 100%;
+    font-size: 34px;
+    text-align: center;
+    text-transform: none;
+    color: var(--event-text);
+}
+
+#roundInfo {
+    position: absolute;
+    top: 721px;
+    left: 25px;
+    width: 390px;
+    height: 56px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--round-bg);
+    font-size: 24px;
+    color: var(--round-text);
+}
+
+#battlePlanName {
+    width: 175px;
+}
+
+.divider {
+    align-self: stretch;
+    margin: 10px 0;
+    border-left: 2px solid var(--round-text);
+}
+
+#roundCounterContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Triangle pointing up for the top of the round, down for the bottom */
+#topOrBottom {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+#topOrBottom.priority-top {
+    border-bottom: 10px solid var(--round-text);
+}
+
+#topOrBottom.priority-bottom {
+    border-top: 10px solid var(--round-text);
+}
+
+#sponsorPanel {
+    position: absolute;
+    top: 797px;
+    left: 24px;
+    width: 392px;
+    height: 270px;
+    box-sizing: border-box;
+    border: 4px solid var(--sponsor-border);
+    background-color: var(--sponsor-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 16px 16px;
+    gap: 10px;
+    /* Uncomment below if you do not have an sponsor logos/details you want to show */
+    /* display: none; */
+}
+
+#sponsorTitle {
+    font-size: 36px;
+    line-height: 1;
+    text-transform: none;
+    color: var(--sponsor-title);
+}
+
+#sponsorLogos {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 12px;
+}
+
+#sponsorLogos img {
+    max-height: 90px;
+    max-width: 160px;
+    object-fit: contain;
+}
+
+/* ===== Player bars =====
+   Shapes are drawn with clip-path on ::before so the bottom bar can flip them vertically
+   (scaleY(-1)) while the text inside stays upright. Every piece is anchored to the screen
+   edge: top: 0 for P1, bottom: 0 for P2. */
+
+.playerBar > div {
+    position: absolute;
+    z-index: 0; /* own stacking context so the ::before shape (z-index -1) stays behind the text */
+    display: flex;
+    align-items: center;
+}
+
+.playerBar.top > div {
+    top: 0;
+}
+
+.playerBar.bottom > div {
+    bottom: 0;
+}
+
+.playerBar > div::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.playerBar.bottom > div::before {
+    transform: scaleY(-1);
+}
+
+.cpBlock {
+    left: 636px;
+    width: 39px;
+    height: 43px;
+    justify-content: center;
+}
+
+.cpBlock::before {
+    background-color: var(--score-bg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 6px 100%);
+}
+
+.vpBlock {
+    left: 680px;
+    width: 75px;
+    height: 64px;
+    justify-content: center;
+}
+
+.vpBlock::before {
+    background-color: var(--score-bg);
+}
+
+/* Butts straight up against the VP block (680 + 75 = 755) with no gap */
+.nameBar {
+    left: 755px;
+    width: 514px;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 20px 0 45px;
+    gap: 25px;
+}
+
+.nameBar::before {
+    background-color: var(--bar-bg);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.tacticTab {
+    height: 26px;
+    box-sizing: border-box;
+    gap: 10px;
+    font-family: 'Montserrat';
+    font-size: 14px;
+    color: var(--tactic-text);
+    white-space: nowrap;
+}
+
+/* Long tactic names shrink (see shrinkToFit in overlay.js) to stay inside the tab */
+.tacticName {
+    flex: 1;
+    min-width: 0;
+    padding-right: 10px;
+    overflow: hidden;
+}
+
+.tacticTab::before {
+    background-color: var(--bar-bg);
+}
+
+.tacticOne {
+    left: 1270px;
+    width: 229px;
+    padding-left: 10px;
+}
+
+.tacticOne::before {
+    clip-path: polygon(4px 0, calc(100% - 5px) 0, 100% 100%, 0 100%);
+}
+
+.tacticTwo {
+    left: 1499px;
+    width: 237px;
+    padding-left: 11px;
+}
+
+.tacticTwo::before {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 5px) 100%, 5px 100%);
+}
+
+.playerPointsVP,
+.playerPointsCP {
+    color: var(--score-text);
+    text-align: center;
+}
+
+.playerPointsVP {
+    font-size: 48px;
+}
+
+.playerPointsCP {
+    font-size: 24px;
+}
+
+.playerName {
+    flex: 1;
+    min-width: 0;
+    font-size: 42px;
+    color: var(--player-name);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.playerFaction {
+    flex: none;
+    height: 40px;
+    width: 40px;
+}
+
+.playerFaction img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.circleContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.circles {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    border: 1px solid var(--tactic-progress-off);
+    border-radius: 50%;
+}
+
+.circles.active {
+    border-color: var(--tactic-progress-on);
+    background-color: var(--tactic-progress-on);
+}
