@@ -1,6 +1,6 @@
 # Tabletop Scoreboard
 
-A real-time scoreboard and stream overlay for tabletop tournaments, run on your local network. A single server keeps four pages in sync:
+A real-time scoreboard and stream overlay for tabletop tournaments, run on your local network. Largely inspired by [Farpnoodle's StreamControl](https://github.com/farpenoodle/StreamControl), but got tired of having to make a controller and update an archaic tool, the Tabletop Scoreboard uses a single local server that keeps four pages in sync, allowing a stream admin or players to update information in real-time:
 
 - **Overlay** (`/overlay`): a transparent page for an OBS Browser Source.
 - **Admin** (`/admin`): full control over the match and which game type is live.
@@ -35,6 +35,8 @@ Add a **Browser Source** pointing at `http://<server-address>:3000/overlay`, siz
 Match state is saved to `data/state.json`, so it survives a server restart.
 
 ## Defining a game type
+
+>Currently the games supported are Age of Sigmar and Marvel Crisis Protocol. If you want to add additional games locally, you can add your games following the steps below or to add to the tool for everybody, you can open an [issue](https://github.com/kyebrowning/tabletop-scoreboard/issues/new) requesting the game or if you want to do the work yourself, you can open a PR 
 
 Each game lives in its own folder:
 
@@ -142,6 +144,8 @@ const factionValues = [''].concat(factions.map((f) => f.name));
 The overlay can load the same file with a `<script>` tag and look up the extra data by name.
 
 ### Overlay
+
+>I tried to make the overlays pretty generic and editable in the `.css` files . Feel free to make your own, each of the elements in the schemas can be called with dot notation.
 
 The overlay is the one part that's custom per game. `overlay/overlay.html` is served from `/games/<game-id>/overlay/`, so relative paths like `../assets/...` and `../factions.js` work. Copy `games/age-of-sigmar/overlay/` to start; it shows how to connect to the server and render the live state.
 
