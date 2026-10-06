@@ -1,6 +1,6 @@
 # Tabletop Scoreboard
 
-A real-time scoreboard and stream overlay for tabletop tournaments, run on your local network. Largely inspired by [Farpnoodle's StreamControl](https://github.com/farpenoodle/StreamControl), but got tired of having to make a controller and update an archaic tool, the Tabletop Scoreboard uses a single local server that keeps four pages in sync, allowing a stream admin or players to update information in real-time:
+A real-time scoreboard and stream overlay for tabletop tournaments, run on your local network. Largely inspired by [Farpnoodle's StreamControl](https://github.com/farpenoodle/StreamControl), but got tired of having to make a new controller for every event and having to update an archaic tool, the Tabletop Scoreboard uses a single local server that keeps four pages in sync, allowing a stream admin or players to update information in real-time:
 
 - **Overlay** (`/overlay`): a transparent page for an OBS Browser Source.
 - **Admin** (`/admin`): full control over the match and which game type is live.
