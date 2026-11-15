@@ -87,10 +87,12 @@ function resolveChange(role, fieldPath, value) {
     throw new Error(`Unknown field path: ${fieldPath}`);
   }
 
+  // Players may write playerEditable fields in their own slot or in the shared (match) fields,
+  // so tables without an admin can still update things like the round.
   const allowed =
     role === 'admin' ||
     ((role === 'p1' || role === 'p2') &&
-      schemaUtils.isOwnSlotPath(fieldPath, role) &&
+      (schemaUtils.isOwnSlotPath(fieldPath, role) || fieldPath.indexOf('shared.') === 0) &&
       fieldDef.playerEditable === true);
 
   if (!allowed) {
