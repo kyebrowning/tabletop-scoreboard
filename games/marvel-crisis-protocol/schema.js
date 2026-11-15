@@ -29,7 +29,7 @@ const sharedFields = {
     type: 'enum', 
     label: 'Round', 
     values: roundValues, 
-    playerEditable: false, 
+    playerEditable: true, 
     default: 'Round 1' 
   }
 };

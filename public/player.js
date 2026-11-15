@@ -1,5 +1,6 @@
 const slot = location.pathname.indexOf('player2') !== -1 ? 'p2' : 'p1';
 const slotNumber = slot === 'p1' ? 1 : 2;
+const opponentSlot = slot === 'p1' ? 'p2' : 'p1';
 
 const socket = io({ query: { role: slot } });
 
@@ -157,21 +158,52 @@ function buildField(path, def, value) {
     return row;
 }
 
-// Only renders fields flagged playerEditable; skips groups left with no editable children.
-function renderFieldTree(container, node, prefix, data) {
+function formatReadOnlyValue(def, value) {
+    if (def.type === 'bool') return value ? def.onLabel || 'Yes' : def.offLabel || 'No';
+    if (/^bool\[\d+\]$/.test(def.type)) return (value || []).map((v) => (v ? '●' : '○')).join(' ');
+    return value === '' || value == null ? '—' : String(value);
+}
+
+// Plain-text row for the opponent section. Uses data-readonly-path (not data-path) so
+// refreshValues() updates its text instead of treating it as an editable control.
+function buildReadOnlyField(path, def, value) {
+    const row = document.createElement('div');
+    row.className = 'field readonly-field';
+
+    const span = document.createElement('span');
+    span.className = 'field-label';
+    span.textContent = SchemaUtils.fieldLabel(path, def);
+    row.appendChild(span);
+
+    const valueEl = document.createElement('span');
+    valueEl.className = 'readonly-value';
+    valueEl.dataset.readonlyPath = path;
+    valueEl.textContent = formatReadOnlyValue(def, value);
+    row.appendChild(valueEl);
+
+    return row;
+}
+
+// Editable mode only renders fields flagged playerEditable; read-only mode renders every field.
+// Either way, groups left with no children are skipped.
+function renderFieldTree(container, node, prefix, data, readOnly) {
     Object.keys(node).forEach((key) => {
         const child = node[key];
         const fullPath = `${prefix}.${key}`;
         if (child && typeof child.type === 'string') {
-            if (!child.playerEditable) return;
-            container.appendChild(buildField(fullPath, child, SchemaUtils.getAtPath(data, fullPath)));
+            const value = SchemaUtils.getAtPath(data, fullPath);
+            if (readOnly) {
+                container.appendChild(buildReadOnlyField(fullPath, child, value));
+            } else if (child.playerEditable) {
+                container.appendChild(buildField(fullPath, child, value));
+            }
         } else {
             const group = document.createElement('fieldset');
             group.className = 'group';
             const legend = document.createElement('legend');
             legend.textContent = SchemaUtils.fieldLabel(fullPath, null);
             group.appendChild(legend);
-            renderFieldTree(group, child, fullPath, data);
+            renderFieldTree(group, child, fullPath, data, readOnly);
             if (group.children.length > 1) container.appendChild(group);
         }
     });
@@ -182,16 +214,33 @@ function fullRender(payload) {
     setPendingCount();
     updateStatus.textContent = '';
     formRoot.innerHTML = '';
+    // Shared match fields both players can edit, so a table without an admin can still keep them current.
+    const matchSection = buildSection('Match Info', payload.schema.sharedFields, 'shared', payload.data);
+    if (matchSection.children.length > 1) formRoot.appendChild(matchSection);
+    formRoot.appendChild(buildSection('Your Info', payload.schema.playerFields, `players.${slot}`, payload.data));
+    // The opponent's info, read-only, so each player can see the full game position.
+    const opponentSection = buildSection('Opponent', payload.schema.playerFields, `players.${opponentSlot}`, payload.data, true);
+    opponentSection.classList.add('opponent-section');
+    formRoot.appendChild(opponentSection);
+}
+
+function buildSection(title, node, prefix, data, readOnly) {
     const section = document.createElement('fieldset');
     section.className = 'section';
     const legend = document.createElement('legend');
-    legend.textContent = 'Your Info';
+    legend.textContent = title;
     section.appendChild(legend);
-    renderFieldTree(section, payload.schema.playerFields, `players.${slot}`, payload.data);
-    formRoot.appendChild(section);
+    renderFieldTree(section, node, prefix, data, readOnly);
+    return section;
 }
 
 function refreshValues(payload) {
+    formRoot.querySelectorAll('[data-readonly-path]').forEach((el) => {
+        const path = el.dataset.readonlyPath;
+        const def = SchemaUtils.getFieldDef(payload.schema, path);
+        if (def) el.textContent = formatReadOnlyValue(def, SchemaUtils.getAtPath(payload.data, path));
+    });
+
     formRoot.querySelectorAll('[data-path]').forEach((el) => {
         if (el === document.activeElement) return;
         const path = el.dataset.path;

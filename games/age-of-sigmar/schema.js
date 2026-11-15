@@ -48,21 +48,21 @@ const sharedFields = {
     type: 'enum',
     label: 'Battleplan',
     values: battleplanValues,
-    playerEditable: false,
+    playerEditable: true,
     default: '',
   },
   round: { 
     type: 'enum', 
     label: 'Round', 
     values: roundValues, 
-    playerEditable: false, 
+    playerEditable: true, 
     default: 'Round 1' 
   },
   topOrBottom: {
     type: 'enum',
     label: 'Top or Bottom of Round',
     values: ['Top', 'Bottom'],
-    playerEditable: false,
+    playerEditable: true,
     default: 'Top',
   },
 };
